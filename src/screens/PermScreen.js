@@ -86,10 +86,5 @@ export default function PermScreen() {
 }
 
 const styles = StyleSheet.create({
-  // input:{
-  //   flex:1,
-  //   width:500,
-  //   height:20,
-  //   backgroundColor:"grey"
-  // }
+
 });
