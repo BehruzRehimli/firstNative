@@ -11,6 +11,7 @@ import api from "../api/api";
 import { Controller, useForm } from "react-hook-form";
 import {
   useCreatePermMutation,
+  useDeletePermMutation,
   useGetPermsQuery,
 } from "../redux/slice/permSlice";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
@@ -21,24 +22,16 @@ export default function PermScreen() {
   const { handleSubmit, control } = useForm();
 
   const { data, isError, isLoading } = useGetPermsQuery();
+  const [deletePerm,deleteDatas]=useDeletePermMutation();
 
-  // const getData=async()=>{
-  //   const datas=await getPerms().unwrap()
-  //   console.log("Perm datalar ===>",datas);
-  //   return datas
-  // }
 
   const onSubmit = (formData) => {
     console.log("submitData===>", formData);
   };
 
-  const deleteHandler=(id)=>{
-    console.log(id);
+  const deleteHandler=async (id)=>{
+    await deletePerm(id).unwrap();
   }
-
-  useEffect(() => {
-    console.log("data ===>", data);
-  });
 
   return (
     <View style={{ flex: 1 }}>
@@ -74,7 +67,7 @@ export default function PermScreen() {
               <Text style={{ color: "black" }}>
                 {item.id}. {item.name}
               </Text>
-              <Pressable onPress={deleteHandler(item.id)}><Icon name="delete" size={20}/></Pressable>
+              <Pressable onPress={()=>deleteHandler(item.id)}><Icon name="delete" size={20}/></Pressable>
             </View>
           );
         }}
