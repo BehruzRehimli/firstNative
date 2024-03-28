@@ -2,6 +2,7 @@ import {
   Dimensions,
   ImageBackground,
   KeyboardAvoidingView,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -13,7 +14,6 @@ import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import axios from "axios";
 import LottieView from "lottie-react-native";
-import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 import { setUser } from "../redux/slice/UserSlice";
 import api from "../api/api";
@@ -22,6 +22,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useLoginMutation } from "../redux/slice/authApiSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { router } from "expo-router";
 
 const shape = z.object({
   login: z.string().min(1),
@@ -38,7 +39,6 @@ export default function LoginFormScreen() {
   const withScreen = Dimensions.get("window").width;
   const heightScreen = Dimensions.get("window").height;
 
-  const nav = useNavigation();
   const dispatch = useDispatch();
   const [login, { isLoading }] = useLoginMutation();
 
@@ -71,8 +71,10 @@ export default function LoginFormScreen() {
     try {
       let response = await login(data).unwrap();
       alert("Login olundu.");
+
+
       dispatch(setUser(response.data));
-      nav.navigate("Home");
+      router.push("");
     } catch (error) {
       console.log(error);
     }
@@ -80,7 +82,7 @@ export default function LoginFormScreen() {
 
   return (
     <ScrollView style={{flex:1}}>
-      <KeyboardAvoidingView style={{flex:1}}>
+      <KeyboardAvoidingView style={{flex:1}} behavior={Platform.OS == 'ios'?"padding":undefined} keyboardVerticalOffset={100}>
         <ImageBackground
           source={require("../assets/images/back.png")}
           resizeMode="stretch"
@@ -88,6 +90,7 @@ export default function LoginFormScreen() {
             width: withScreen,
             height: heightScreen,
             backgroundColor: "white",
+            
           }}
         >
           <SafeAreaView style={{ alignItems: "center" }}>

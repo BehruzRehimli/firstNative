@@ -1,24 +1,21 @@
 import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useEffect, useState } from "react";
-import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import LottieView from "lottie-react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../redux/slice/UserSlice";
-import { API_BASE } from "@env";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { router } from "expo-router";
 
-export default function HomeScreen({ route, navigation }) {
+export default function HomeScreen() {
   const user = useSelector((state) => state.user.user);
-  const focus = useIsFocused();
   const dispatch = useDispatch();
-  const [memory,setMemory]=useState()
 
   const fetchUserData = async () => {
     try {
       const data = await AsyncStorage.getItem("user");
 
       if (data) {
-         setMemory(JSON.parse(data));
+        dispatch(setUser(JSON.parse(data)));
       } else {
         return null;
       }
@@ -28,19 +25,10 @@ export default function HomeScreen({ route, navigation }) {
   };
 
 
-  useEffect(() => {
-    if (focus) {
-      console.log("Home focus oldu");
-    }
-    // fetchUserData()
-    if (memory) {
-      dispatch(setUser(memory))
-    }
-  }, [focus,memory]);
 
-  useEffect(()=>{
-    fetchUserData()
-  },[])
+  useEffect(() => {
+    fetchUserData();
+  }, []);
 
   return (
     <View>
@@ -54,14 +42,14 @@ export default function HomeScreen({ route, navigation }) {
       ></Button>
       <Button
         title="Course sayfasi"
-        onPress={() => navigation.navigate("Courses")}
+        onPress={() => router.push("course")}
       ></Button>
       <Button
         title="Form sayfasi"
-        onPress={() => navigation.navigate("FormScreen")}
+        onPress={() => router.push("form")}
       ></Button>
       <TouchableOpacity
-        onPress={() => navigation.navigate("Login")}
+        onPress={() => router.push("login")}
         style={{
           backgroundColor: "green",
           padding: 10,
@@ -73,7 +61,7 @@ export default function HomeScreen({ route, navigation }) {
         <Text style={{ color: "white", fontWeight: "900" }}>Login</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => navigation.navigate("Board")}
+        onPress={() => router.push("board")}
         style={{
           backgroundColor: "green",
           padding: 10,
@@ -85,7 +73,7 @@ export default function HomeScreen({ route, navigation }) {
         <Text style={{ color: "white", fontWeight: "900" }}>Board</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => navigation.navigate("Perm")}
+        onPress={() => router.push("perm")}
         style={{
           backgroundColor: "green",
           padding: 10,

@@ -9,11 +9,10 @@ import {
   View,
 } from "react-native";
 import React from "react";
-import { useNavigation } from "@react-navigation/native";
 import LottieView from "lottie-react-native";
+import { router } from "expo-router";
 
 export default function LoginScreen() {
-  const nav = useNavigation();
   const withScreen = Dimensions.get("window").width;
   const heightScreen = Dimensions.get("window").height;
 
@@ -49,7 +48,7 @@ export default function LoginScreen() {
           </Text>
           <View style={styles.btnContainer}>
             <TouchableOpacity
-              onPress={() => nav.navigate("LoginForm")}
+              onPress={() => router.push("loginform")}
               style={[styles.btn, styles.login]}
             >
               <Text style={styles.loginText}>Login</Text>

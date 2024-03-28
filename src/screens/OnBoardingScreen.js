@@ -1,13 +1,12 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import Onboarding from "react-native-onboarding-swiper";
-import { useNavigation } from "@react-navigation/native";
+import { router } from "expo-router";
 
 export default function OnBoardingScreen() {
-  const nav = useNavigation();
   return (
     <Onboarding
-      onDone={() => nav.navigate("Home")}
+      onDone={() => router.push("")}
       pages={[
         {
           backgroundColor: "#D7F9F1",

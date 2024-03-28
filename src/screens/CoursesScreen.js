@@ -9,8 +9,9 @@ import {
   TextInput,
 } from "react-native";
 import React from "react";
+import { router } from "expo-router";
 
-export default function CoursesScreen({ navigation }) {
+export default function CoursesScreen() {
   const data = [
     {
       name: "Js",
@@ -39,12 +40,12 @@ export default function CoursesScreen({ navigation }) {
         data={data}
         style={styles.flatlist}
         renderItem={({ item }) => (
-          <Text onPress={() => navigation.navigate("Home")}>{item.name}</Text>
+          <Text onPress={() => router.push("")}>{item.name}</Text>
         )}
         keyExtractor={(item) => item.id}
       />
       <TextInput autoCorrect={false} style={{backgroundColor:"grey",width:200}}/>
-      <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate("Home")} >
+      <TouchableOpacity style={styles.btn} onPress={() => router.push("")} >
         <Text style={styles.btnText}>Geri</Text>
       </TouchableOpacity>
     </View>

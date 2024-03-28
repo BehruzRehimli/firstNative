@@ -1,14 +1,9 @@
 import { StyleSheet, Text, View, TextInput, Button } from "react-native";
 import React, { useEffect, useState } from "react";
-import {
-  useFocusEffect,
-  useIsFocused,
-  useNavigation,
-} from "@react-navigation/native";
+import { router } from "expo-router";
+
 
 export default function FormScreen({ route }) {
-  const isFocused = useIsFocused();
-  const nav = useNavigation();
   const [value, setValue] = useState();
 
   // useFocusEffect(() => {
@@ -28,7 +23,7 @@ export default function FormScreen({ route }) {
           setValue(val);
         }}
       />
-      <Button title="goster" onPress={() => nav.navigate("Home")} />
+      <Button title="goster" onPress={() => router.push("")} />
     </View>
   );
 }

@@ -10,7 +10,7 @@ const baseQuery = fetchBaseQuery({
     console.log("token==>",token);
     if (token) {
       
-      headers.set("Authorization", `Bearer ${token}`);
+      headers.set("authorization", `Bearer ${token}`);
     }
     return headers;
   },
@@ -19,14 +19,18 @@ const baseQuery = fetchBaseQuery({
 const baseQueryWithReauth = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
 
-  if (result?.error?.status == 404) {
-    console.log("sending refresh token");
+  if (result?.error?.status == 403) {
     const refreshResult = await baseQuery(
-      "user/login/access-token",
+      {
+        url: "user/login/access-token",
+        method:"POST",
+        body: {
+          refreshToken: api.getState().user?.user?.refreshToken
+        }
+      },
       api,
       extraOptions
     );
-    console.log("refresh token=>", refreshResult?.data);
 
     if (refreshResult?.data) {
       api.dispatch(setUser(refreshResult.data));

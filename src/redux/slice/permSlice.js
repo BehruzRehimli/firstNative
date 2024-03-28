@@ -5,7 +5,7 @@ export const permApiSlice= apiSlice.injectEndpoints({
     endpoints: builder=>({
         getPerms: builder.query({
             query:()=>'/perm',
-            keepUnusedDataFor:2,
+            keepUnusedDataFor:30,
             transformResponse:(res)=>res.data,
             providesTags:["Perms"]
         }),
@@ -16,9 +16,17 @@ export const permApiSlice= apiSlice.injectEndpoints({
             }),
             invalidatesTags:["Perms"]
 
+        }),
+        addPerm: builder.mutation({
+            query: (data)=>({
+                url:"/perm",
+                method:"POST",
+                body: data
+            }),
+            invalidatesTags:["Perms"]
         })
     })
     
 })
 
-export const {useGetPermsQuery , useDeletePermMutation}=permApiSlice
+export const {useGetPermsQuery , useDeletePermMutation,useAddPermMutation}=permApiSlice

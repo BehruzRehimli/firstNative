@@ -9,6 +9,7 @@ import LoginScreen from "./src/screens/LoginScreen";
 import LoginFormScreen from "./src/screens/LoginFormScreen";
 import OnBoardingScreen from "./src/screens/OnBoardingScreen";
 import PermScreen from "./src/screens/PermScreen";
+import { StatusBar } from "expo-status-bar";
 
 export default function Router() {
   const Stack = createNativeStackNavigator();
@@ -58,6 +59,7 @@ export default function Router() {
           component={PermScreen}
         />
       </Stack.Navigator>
+      <StatusBar hidden={true}/>
     </NavigationContainer>
   );
 }
